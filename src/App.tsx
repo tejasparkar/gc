@@ -1,5 +1,9 @@
-import  { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import { Menu, X, MapPin, Phone, Mail, Clock, Gamepad2, Users, Wifi, Coffee } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ScrollMagic from 'scrollmagic';
+import './App.css';
 import dota2 from './assets/dota2.jpg'
 import cs2 from './assets/cs2.jpg'
 import valorant from './assets/valorant.jpg'
@@ -97,6 +101,89 @@ export default function PixelArenaWebsite() {
     setIsMenuOpen(false);
   };
 
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(".hero-title", {
+      opacity: 0,
+      y: 50,
+      duration: 1.5,
+      ease: "power3.out"
+    });
+
+    // Initialize ScrollMagic Controller
+    const controller = new ScrollMagic.Controller();
+
+    // Fade in animation for Games section title
+    new ScrollMagic.Scene({
+      triggerElement: ".games-section-title",
+      triggerHook: 0.9, // show when scrolled 90% of the way in
+      reverse: false // does not repeat when scrolling back up
+    })
+    .setClassToggle(".games-section-title", "fade-in-up") // add class to games-section-title
+    .addTo(controller);
+
+    // Fade in animation for each game card
+    document.querySelectorAll('.game-card').forEach((element, index) => {
+      new ScrollMagic.Scene({
+        triggerElement: element,
+        triggerHook: 0.9,
+        reverse: false
+      })
+      .on("enter", () => {
+        gsap.fromTo(element, 
+          { opacity: 0, y: 20 }, 
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: index * 0.1 }
+        );
+      })
+      .addTo(controller);
+    });
+
+    // Fade in animation for Rates section title
+    new ScrollMagic.Scene({
+      triggerElement: ".rates-section-title",
+      triggerHook: 0.9,
+      reverse: false
+    })
+    .setClassToggle(".rates-section-title", "fade-in-up")
+    .addTo(controller);
+
+    // Fade in animation for each rate card
+    document.querySelectorAll('.rate-card').forEach((element, index) => {
+      new ScrollMagic.Scene({
+        triggerElement: element,
+        triggerHook: 0.9,
+        reverse: false
+      })
+      .on("enter", () => {
+        gsap.fromTo(element, 
+          { opacity: 0, y: 20 }, 
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: index * 0.1 }
+        );
+      })
+      .addTo(controller);
+    });
+
+    // Fade in animation for Booking section title
+    new ScrollMagic.Scene({
+      triggerElement: ".booking-section-title",
+      triggerHook: 0.9,
+      reverse: false
+    })
+    .setClassToggle(".booking-section-title", "fade-in-up")
+    .addTo(controller);
+
+    // Fade in animation for Contact section title
+    new ScrollMagic.Scene({
+      triggerElement: ".contact-section-title",
+      triggerHook: 0.9,
+      reverse: false
+    })
+    .setClassToggle(".contact-section-title", "fade-in-up")
+    .addTo(controller);
+
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Navigation */}
@@ -141,7 +228,7 @@ export default function PixelArenaWebsite() {
       <section id="home" className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center space-y-6">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent animate-pulse hero-title">
               Welcome to PixelArena
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
@@ -168,12 +255,12 @@ export default function PixelArenaWebsite() {
       {/* Games Section */}
       <section id="games" className="py-16 px-4 bg-gray-800/50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent games-section-title">
             Popular Games Available
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {games.map((game, index) => (
-              <div key={index} className="bg-gray-900 rounded-lg overflow-hidden border border-purple-500/30 hover:border-purple-500 transition-all hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50">
+              <div key={index} className="bg-gray-900 rounded-lg overflow-hidden border border-purple-500/30 hover:border-purple-500 transition-all hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 game-card">
                 <div className="h-48 bg-gradient-to-br relative overflow-hidden">
                   <img src={game.image} alt={game.name} className="w-full h-full object-cover"  />
                   <div className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-30`}></div>
@@ -191,12 +278,12 @@ export default function PixelArenaWebsite() {
       {/* Rates Section */}
       <section id="rates" className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent rates-section-title">
             Our Rates
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {rates.map((rate, index) => (
-              <div key={index} className={`bg-gray-800 rounded-lg p-8 border-2 ${index === 1 ? 'border-purple-500 scale-105' : 'border-gray-700'} hover:border-purple-500 transition-all`}>
+              <div key={index} className={`bg-gray-800 rounded-lg p-8 border-2 ${index === 1 ? 'border-purple-500 scale-105' : 'border-gray-700'} hover:border-purple-500 transition-all rate-card`}>
                 <h3 className="text-2xl font-bold text-center mb-4">{rate.title}</h3>
                 <div className="text-center mb-6">
                   <span className="text-5xl font-bold text-purple-400">{rate.price}</span>
@@ -219,7 +306,7 @@ export default function PixelArenaWebsite() {
       {/* Booking Section */}
       <section id="booking" className="py-16 px-4 bg-gray-800/50">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent booking-section-title">
             Book Your Session
           </h2>
           <div className="bg-gray-900 rounded-lg p-8 border border-purple-500/30">
@@ -310,7 +397,7 @@ export default function PixelArenaWebsite() {
       {/* Contact & Map Section */}
       <section id="contact" className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent contact-section-title">
             Visit Us
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
