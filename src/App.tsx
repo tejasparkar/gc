@@ -1,5 +1,8 @@
 import  { useState } from 'react';
 import { Menu, X, MapPin, Phone, Mail, Clock, Gamepad2, Users, Wifi, Coffee } from 'lucide-react';
+import dota2 from './assets/dota2.jpg'
+import cs2 from './assets/cs2.jpg'
+import valorant from './assets/valorant.jpg'
 
 export default function PixelArenaWebsite() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,20 +19,19 @@ export default function PixelArenaWebsite() {
   const games = [
     {
       name: 'Dota 2',
-      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
+      image: dota2,
       description: 'Epic MOBA battles',
       color: 'from-red-500 to-orange-500'
     },
     {
       name: 'CS 2',
-      image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80',
+      image: cs2,
       description: 'Tactical FPS action',
       color: 'from-yellow-500 to-orange-500'
     },
     {
       name: 'Valorant',
-      image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
-      description: 'Competitive shooter',
+      image: valorant,
       color: 'from-red-500 to-pink-500'
     },
     {
